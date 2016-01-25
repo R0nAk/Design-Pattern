@@ -1,0 +1,75 @@
+package volatilekeyword;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
+public class UseOfVolatileKeyWord {
+
+	boolean var = false;
+
+	public static void main(String[] args) throws CloneNotSupportedException {
+
+		/*
+		 * final UseOfVolatileKeyWord object = new UseOfVolatileKeyWord();
+		 * 
+		 * Thread thread = new Thread(new Runnable() {
+		 * 
+		 * @Override public void run() { // TODO Auto-generated method stub
+		 * object.checkVariable(); } }); thread.setName("infiniteLooperThread");
+		 * thread.start();
+		 * 
+		 * try { Thread.sleep(2000); object.toogleValue(); object.printvar(); }
+		 * catch (InterruptedException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
+		final SecondClass object1 = new SecondClass();
+
+		
+			ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(20);
+			
+			for (int i = 0; i < 19; i++) {
+				executor.submit(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						object1.checkVariable();
+						
+					}
+				});
+		
+			}
+		
+		
+			executor.submit(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					object1.toogleValue();
+				}
+			});
+			
+			executor.shutdown();
+		
+		
+	
+
+	}
+
+	/*
+	 * public void toogleValue() { var = !var; }
+	 * 
+	 * public void checkVariable() { try { while (!var) {
+	 * System.out.println(Thread.currentThread().getName()); printvar();
+	 * Thread.sleep(500); } } catch (InterruptedException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * }
+	 * 
+	 * public void printvar() { System.out.println("var :" +
+	 * String.valueOf(var)); }
+	 */
+
+}
